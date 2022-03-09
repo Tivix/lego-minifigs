@@ -2,7 +2,7 @@ import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Paper, Typography } from '@mui/material';
 import { styled } from '@mui/system';
-import { MinifigInterface } from '../../../intefaces/Minifig.interface';
+import { MinifigInterface } from '../../intefaces/Minifig.interface';
 import OrdersList from './OrdersList/OrdersList';
 import ContactForm from './ContactForm/ContactForm';
 

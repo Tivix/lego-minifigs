@@ -29,6 +29,8 @@ const StyledButton = styled(Button)({
   width: '60%',
 });
 
+// @todo: Type formik values
+
 interface FormikTextFieldProps {
   formik: any;
   id: string;
@@ -57,7 +59,7 @@ const FormikTextField = ({
   />
 );
 
-// @todo: refactor, add phone number to validation
+// @todo: refactor, add phone number to validation, fix date validation (emotion?)
 
 const FormValidation = Yup.object().shape({
   name: Yup.string()
@@ -65,7 +67,7 @@ const FormValidation = Yup.object().shape({
   surname: Yup.string()
     .required('Required'),
   email: Yup.string().email('Wrong email').required('Required'),
-  birthDate: Yup.date().nullable().min(new Date(1900, 0, 1)).required(''),
+  birthDate: Yup.date().nullable().min(new Date(1900, 0, 1)).required('Required'),
   phoneNumber: Yup.string().required('Required'),
   city: Yup.string().required('Required'),
   state: Yup.string().required('Required'),
