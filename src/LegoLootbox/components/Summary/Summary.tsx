@@ -12,15 +12,31 @@ interface Location {
   }
 }
 
-const StyledContainer = styled(Paper)({
-  width: '80%',
-  margin: '0 auto',
-  padding: 30,
-  marginTop: 50,
-  backgroundColor: '#0B0603',
-  display: 'flex',
-  justifyContent: 'space-around',
-});
+const StyledContainer = styled(Paper)(({ theme }) => (
+  {
+    width: '80%',
+    margin: '0 auto',
+    padding: 30,
+    marginTop: 50,
+    backgroundColor: '#0B0603',
+    display: 'flex',
+    justifyContent: 'space-around',
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+      flexDirection: 'column-reverse',
+      justifyContent: 'center',
+      alignItems: 'center',
+    },
+  }
+));
+
+const StyledSummaryContainer = styled('div')(({ theme }) => ({
+  width: '40%',
+  [theme.breakpoints.down('lg')]: {
+    width: '100%',
+    alignSelf: 'center',
+  },
+}));
 
 const Summary = () => {
   const location = useLocation();
@@ -29,10 +45,10 @@ const Summary = () => {
   return (
     <StyledContainer>
       <ContactForm />
-      <div>
+      <StyledSummaryContainer>
         <Typography variant="h5">YOUR ORDER</Typography>
         <OrdersList minifig={minifig} />
-      </div>
+      </StyledSummaryContainer>
     </StyledContainer>
   );
 };

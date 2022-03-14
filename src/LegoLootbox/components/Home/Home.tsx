@@ -5,18 +5,26 @@ import { styled } from '@mui/system';
 import { Link } from 'react-router-dom';
 import mysteryBoxImg from '../../assets/img/mystery-box-png.png';
 
-const StyledContainer = styled('div')({
-  textTransform: 'uppercase',
-  position: 'absolute',
-  left: '50%',
-  top: '50%',
-  transform: 'translate(-50%, -50%)',
-  display: 'flex',
-  flexDirection: 'column',
-  justifyContent: 'space-around',
-  height: '60%',
-  whiteSpace: 'nowrap',
-});
+const StyledContainer = styled('div')(({ theme }) => (
+  {
+    textTransform: 'uppercase',
+    position: 'absolute',
+    left: '50%',
+    top: '50%',
+    transform: 'translate(-50%, -50%)',
+    display: 'flex',
+    flexDirection: 'column',
+    justifyContent: 'space-around',
+    height: '60%',
+    whiteSpace: 'nowrap',
+    '& > a': {
+      textDecoration: 'none',
+    },
+    [theme.breakpoints.down('md')]: {
+      height: '100%',
+    },
+  }
+));
 
 const StyledImg = styled('img')({
   width: 200,

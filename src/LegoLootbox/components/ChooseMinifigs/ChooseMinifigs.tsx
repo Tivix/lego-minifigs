@@ -12,16 +12,23 @@ import { MinifigPartsResult } from '../../intefaces/MinifigParts.interface';
 
 interface IRenderCardsProps {
   minifigs: MinifigInterface[] | null,
-  onCardClickCallback: Function
+  onCardClickCallback: Function,
 }
 
-const StyledContainer = styled('div')({
-  display: 'flex',
-  justifyContent: 'space-around',
-  alignItems: 'center',
-  height: '100%',
-  marginTop: '10%',
-});
+const StyledContainer = styled('div')(({ theme }) => (
+  {
+    display: 'flex',
+    justifyContent: 'space-around',
+    alignItems: 'center',
+    height: '100%',
+    marginTop: '10%',
+    [theme.breakpoints.down('md')]: {
+      flexDirection: 'column',
+      justifyContent: 'space-between',
+      gap: 50,
+    },
+  }
+));
 
 const RenderCards = ({ minifigs, onCardClickCallback }: IRenderCardsProps): JSX.Element | null => {
   if (minifigs == null) {
@@ -95,9 +102,16 @@ const ChooseMinifigs: React.FC = () => {
 
   return (
     <StyledContainer>
-      <RenderCards onCardClickCallback={onMinifigSelectCallback} minifigs={minifigs} />
+      <RenderCards
+        onCardClickCallback={onMinifigSelectCallback}
+        minifigs={minifigs}
+      />
       <Drawer anchor="right" onClose={toggleDrawer(false)} open={isDrawerOpen}>
-        <SummarizeList minifigsParts={minifigsParts} minifig={selectedMinifig} />
+        <SummarizeList
+          setIsDrawerOpen={setIsDrawerOpen}
+          minifigsParts={minifigsParts}
+          minifig={selectedMinifig}
+        />
       </Drawer>
     </StyledContainer>
   );

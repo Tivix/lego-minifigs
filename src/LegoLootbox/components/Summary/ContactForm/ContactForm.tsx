@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { useFormik } from 'formik';
+import { useFormik, FormikProps } from 'formik';
 import { TextField } from '@mui/material';
 import { styled } from '@mui/system';
 import Button from '@mui/material/Button';
@@ -11,25 +11,52 @@ const StyledTextfield = styled(TextField)({
   color: 'white',
 });
 
-const StyledFormContainer = styled('div')({
-  display: 'flex',
-  flexDirection: 'row',
-  width: '60%',
-  flexWrap: 'wrap',
-  justifyContent: 'space-between',
-  marginBottom: 40,
-});
+const StyledFormContainer = styled('div')(({ theme }) => (
+  {
+    display: 'flex',
+    flexDirection: 'row',
+    width: '60%',
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+    marginBottom: 40,
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+    },
+  }
+));
 
-const StyledContainer = styled('div')({
-  width: '50%',
-});
+const StyledContainer = styled('div')(({ theme }) => (
+  {
+    width: '50%',
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+      marginTop: 50,
+    },
+  }
+));
 
-const StyledButton = styled(Button)({
-  alignSelf: 'center',
-  width: '60%',
-});
+const StyledButton = styled(Button)(({ theme }) => (
+  {
+    alignSelf: 'center',
+    width: '60%',
+    [theme.breakpoints.down('lg')]: {
+      width: '100%',
+    },
+  }
+));
 
 // @todo: Type formik values
+
+interface FormValues {
+  name: string;
+  surname: string;
+  email: string;
+  birthDate: string;
+  phoneNumber: string;
+  city: string;
+  state: string;
+  zipCode: string;
+}
 
 interface FormikTextFieldProps {
   formik: any;
@@ -74,8 +101,8 @@ const FormValidation = Yup.object().shape({
   zipCode: Yup.string().required('Required'),
 });
 
-const ContactForm: React.FC<{}> = () => {
-  const formik = useFormik({
+const ContactForm: React.FC = () => {
+  const formik: FormikProps<FormValues> = useFormik<FormValues>({
     initialValues: {
       name: '',
       surname: '',
@@ -101,8 +128,8 @@ const ContactForm: React.FC<{}> = () => {
     <StyledContainer>
       <form onSubmit={formik.handleSubmit}>
         <StyledFormContainer>
-          <FormikTextField fullWidth={false} formik={formik} id="name" name="name" label="Name" placeholder="John" />
-          <FormikTextField fullWidth={false} formik={formik} id="surname" name="surname" label="Surname" placeholder="Doe" />
+          <FormikTextField formik={formik} id="name" name="name" label="Name" placeholder="John" />
+          <FormikTextField formik={formik} id="surname" name="surname" label="Surname" placeholder="Doe" />
           <FormikTextField formik={formik} id="email" name="email" label="Email" placeholder="john.doe@example.com" />
           <FormikTextField formik={formik} id="phoneNumber" name="phoneNumber" label="Phone Number" placeholder="+11(111) 111-111" />
           <FormikTextField formik={formik} id="birthDate" name="birthDate" label="Birth date" placeholder="dd/mm/yyyy" />

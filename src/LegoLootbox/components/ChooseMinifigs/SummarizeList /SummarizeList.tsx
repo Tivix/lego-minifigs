@@ -1,13 +1,15 @@
 import React from 'react';
 import { styled } from '@mui/system';
-import { Typography, Button } from '@mui/material';
+import { Typography, Button, Hidden } from '@mui/material';
 import { Link } from 'react-router-dom';
+import CloseIcon from '@mui/icons-material/Close';
 import { MinifigInterface } from '../../../intefaces/Minifig.interface';
 import { MinifigPartsResult } from '../../../intefaces/MinifigParts.interface';
 
 interface IProps {
-  minifig: MinifigInterface | null,
-  minifigsParts: MinifigPartsResult[] | null
+  minifig: MinifigInterface | null;
+  minifigsParts: MinifigPartsResult[] | null;
+  setIsDrawerOpen: Function;
 }
 
 interface IRenderListDetail {
@@ -58,6 +60,12 @@ const StyledPartsListContainer = styled('div')({
   flexWrap: 'wrap',
 });
 
+const StyledButton = styled(Button)(({ theme }) => ({
+  [theme.breakpoints.down('md')]: {
+    width: '100%',
+  },
+}));
+
 const RenderListDetail = ({ label, value }: IRenderListDetail) => (
   <StyledListContainer>
     <Typography variant="h5">
@@ -86,10 +94,13 @@ const mapPartsListToComponent = (partsList: MinifigPartsResult[] | null) => {
   );
 };
 
-const SummarizeList = ({ minifig, minifigsParts }: IProps) => {
+const SummarizeList = ({ minifig, minifigsParts, setIsDrawerOpen }: IProps) => {
   if (!minifig) return null;
   return (
     <StyledContainer>
+      <Hidden mdUp>
+        <CloseIcon onClick={() => setIsDrawerOpen(false)} />
+      </Hidden>
       <RenderListDetail label="Name" value={minifig?.name} />
       <RenderListDetail label="Minifig number" value={minifig?.set_num} />
       <RenderListDetail label="Parts" value={minifig?.num_parts} />
@@ -97,7 +108,7 @@ const SummarizeList = ({ minifig, minifigsParts }: IProps) => {
         {mapPartsListToComponent(minifigsParts)}
       </StyledPartsListContainer>
       <Link state={{ minifig }} to="/summary">
-        <Button color="secondary" variant="contained">Purchase</Button>
+        <StyledButton color="secondary" variant="contained">Purchase</StyledButton>
       </Link>
     </StyledContainer>
   );
